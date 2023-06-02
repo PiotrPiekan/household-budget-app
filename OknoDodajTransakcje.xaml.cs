@@ -27,10 +27,10 @@ namespace Projekt
             DodajTransakcjeButton.IsEnabled = false;
 
 
-            if (KwotaBox.Text.Length > 0 && TytulBox.Text.Length > 0 && DataBox.Text.Length > 0)
-            {
-                DodajTransakcjeButton.IsEnabled = true;
-            }
+            //if (KwotaBox.Text.Length > 0 && TytulBox.Text.Length > 0 && DataBox.Text.Length > 0)
+            //{
+            //    DodajTransakcjeButton.IsEnabled = true;
+            //}
         }
 
 
