@@ -1,0 +1,68 @@
+﻿<Window x:Class="Projekt.OknoDodajTransakcje"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Projekt"
+        mc:Ignorable="d"
+        Title="OknoDodajTransakcje" Height="450" Width="800">
+    <Grid Background="#FF3D4053">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBox Name="TytulBox" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center"  TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="220" Height="40" FontSize="28" BorderThickness="2" BorderBrush="#FF253C4A" Background="#FFCCD4DF" Foreground="White" />
+        <Label  Grid.Column="0" Grid.Row="0"  Content="Tytuł:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="220" Height="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" FontSize="24"/>
+
+        <TextBox Name="KwotaBox" Grid.Column="1" Grid.Row="1"  HorizontalAlignment="Center" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="220" Height="40" FontSize="28" BorderThickness="2" BorderBrush="#FF253C4A" Background="#FFCCD4DF" Foreground="White" PreviewTextInput="CzyLiczba"/>
+        <Label  Grid.Column="0" Grid.Row="1"  Content="Kwota:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="220" Height="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" FontSize="24"/>
+
+        <TextBox Name="DataBox" Grid.Column="1" Grid.Row="2"  HorizontalAlignment="Center" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="220" Height="40" FontSize="28" BorderThickness="2" BorderBrush="#FF253C4A" Background="#FFCCD4DF" Foreground="White" PreviewTextInput="CzyLiczba"/>
+        <Label  Grid.Column="0" Grid.Row="2"  Content="Data:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="220" Height="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" FontSize="24"/>
+
+        <Label Grid.Row="3" Content="Czy wydatek/wpływ stały: " VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontSize="24" Foreground="White"/>
+        <CheckBox x:Name="StalyCheckBox" Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="30" Width="30" Background="White" BorderBrush="#FF5F9BCF" Padding="0,0,0,0" Margin="300,25,0,0" Checked="OkresBoxEnbled" Unchecked="OkresBoxDisebled" >
+            <CheckBox.LayoutTransform>
+                <ScaleTransform ScaleX="2" ScaleY="2" />
+            </CheckBox.LayoutTransform>
+        </CheckBox>
+
+        <TextBox x:Name="CyklBox" Grid.Column="1" Grid.Row="3"  HorizontalAlignment="Center" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="220" Height="40" FontSize="28" BorderThickness="2" BorderBrush="#FF253C4A" Background="#FFCCD4DF" Foreground="White" />
+
+        <Label Grid.Row="4" Content="Kategoria: " VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="24" Foreground="White"/>
+        <ComboBox x:Name="KategorieBox" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="220" Height="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="#FF5F9BCF" Foreground="Black" Background="#FF5F9BCF" FontSize="20">
+            <ComboBoxItem Content="Rozrywka"/>
+            <ComboBoxItem Content="Zwierzeta"/>
+        </ComboBox>
+
+        <Button x:Name="DodajTransakcjeButton"  Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" Content="DODAJ" FontSize="24" Foreground="White" FontWeight="Bold" BorderBrush="#FF4B5784" Background="#FFA4B2B3" Click="DodajTransakcje">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=TytulBox, Path=Text.Length, Mode=OneWay}" Value="0"/>
+                                <Condition Binding="{Binding ElementName=KwotaBox, Path=Text.Length, Mode=OneWay}" Value="0"/>
+                                <Condition Binding="{Binding ElementName=DataBox, Path=Text.Length, Mode=OneWay}" Value="0"/>
+
+                             </MultiDataTrigger.Conditions>
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>    
+            
+    </Grid>
+
+
+</Window>

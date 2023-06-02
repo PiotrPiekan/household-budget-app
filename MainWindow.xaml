@@ -1,0 +1,71 @@
+﻿<Window x:Class="Projekt.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Projekt"
+        mc:Ignorable="d"
+        Title="Budżet domowy" Height="500" Width="800">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <!-- Styl buttonów w combo boxie -->
+                    <Style x:Key="DodajMenuButtonStyle" TargetType="Button">
+                        <Setter Property="BorderThickness" Value="0" />
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                        <Setter Property="FontSize" Value="20"/>
+                        <Setter Property="Background" Value="White"/>
+                        <Setter Property="Width" Value="120"/>
+                        <Setter Property="Margin" Value="0" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="White"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+
+
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Background="#FF3D4053">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Button x:Name="Wczytaj" Grid.Column="0" Grid.ColumnSpan="2"  Content="Wczytaj dane" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="20,0,0,0" Width="140" Height="60" Background="#FFA4B2B3" Foreground="#FF253C4A" FontSize="18" Click="WczytajDane" />
+        <Button x:Name="Zapisz" Grid.Column="4" Grid.ColumnSpan="2"  Content="Zapisz dane" HorizontalAlignment="Right" VerticalAlignment="Center"  Margin="0,0,20,00" Width="140" Height="60" Background="#FFA4B2B3" Foreground="#FF253C4A" FontSize="18" Click="ZapiszDane" />
+
+
+        <TextBlock AutomationProperties.Name="SaldoTextBlock" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Center"  TextWrapping="Wrap" Text="Saldo: 0zł" VerticalAlignment="Center" FontSize="36" FontWeight="Normal" Foreground="White" FontFamily="Calibri" />
+
+
+        <Button x:Name="WplywButton" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"  Content="Dodaj wpływ"  Click="DodajWplyw" Width="160" Height="60" Background="#FFA4B2B3" Foreground="#FF253C4A" FontSize="18" />
+        <Image x:Name="icon" Grid.Column="2" Grid.Row="1" Source="/icon.jpg"/>
+        <Button x:Name="WydatekButton" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="1"  Content="Dodaj wydatek"  Click="DodajWydatek" Width="160" Height="60" Background="#FFA4B2B3" Foreground="#FF253C4A" FontSize="18" />
+
+        <ScrollViewer x:Name="HistoriaScroller" Grid.Row="3" Grid.RowSpan="3"  Grid.Column="0" Grid.ColumnSpan="3" Visibility="Hidden" CanContentScroll="True">
+            <!-- Tu znajdzie sie historia transakcji -->
+            <TextBox x:Name="Historia" Visibility="Hidden" />
+        </ScrollViewer>
+
+
+    </Grid>
+
+
+
+</Window>
