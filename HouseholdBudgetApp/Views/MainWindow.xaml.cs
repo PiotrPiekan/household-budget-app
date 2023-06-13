@@ -25,29 +25,35 @@ namespace HouseholdBudgetApp.Views
             InitializeComponent();
         }
 
-        private void MenuItemFileNew_Click(object sender, RoutedEventArgs e)
+        private void NewFile(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void MenuItemFileOpen_Click(object sender, RoutedEventArgs e)
+        private void Open(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void MenuItemFileSave_Click(object sender, RoutedEventArgs e)
+        private void Save(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void MenuItemFileSaveTo_Click(object sender, RoutedEventArgs e)
+        private void SaveTo(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void MenuItemHelpAbout_Click(object sender, RoutedEventArgs e)
+        private void OpenAboutWindow(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void OpenNewTransactionWindow(object sender, RoutedEventArgs e)
+        {
+            NewTransactionWindow window = new NewTransactionWindow();
+            window.ShowDialog();
         }
     }
 }

@@ -3,12 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:HouseholdBudgetApp"
+        xmlns:local="clr-namespace:HouseholdBudgetApp.Views"
         mc:Ignorable="d"
-        Title="Budżet domowy" Height="600" Width="800" Background="#FF252540">
-    <Grid Background="#FFB7D6FF">
+        xml:lang="pl-PL"
+        Title="Budżet domowy" Height="600" Width="800" Background="#FFB7D6FF">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
@@ -19,46 +20,27 @@
             </Grid.RowDefinitions>
             <DockPanel>
                 <Menu DockPanel.Dock="Top">
-                    <MenuItem x:Name="MenuItemFile" Header="Plik">
-                        <MenuItem x:Name="MenuItemFileNew" Header="Nowy" Click="MenuItemFileNew_Click"/>
-                        <MenuItem x:Name="MenuItemFileOpen" Header="Otwórz plik" Click="MenuItemFileOpen_Click"/>
-                        <MenuItem x:Name="MenuItemFileSave" Header="Zapisz" Click="MenuItemFileSave_Click"/>
-                        <MenuItem x:Name="MenuItemFileSaveTo" Header="Zapisz jako..." Click="MenuItemFileSaveTo_Click"/>
+                    <MenuItem Header="Plik">
+                        <MenuItem Header="Nowy" Click="NewFile"/>
+                        <MenuItem Header="Otwórz plik" Click="Open"/>
+                        <MenuItem Header="Zapisz" Click="Save"/>
+                        <MenuItem Header="Zapisz jako..." Click="SaveTo"/>
                     </MenuItem>
-                    <!--<MenuItem x:Name="MenuItemEdit" Header="Edytuj">
-                    <MenuItem x:Name="MenuItemEditNewTransaction" Header="Dodaj nową transakcję"/>
-                    <MenuItem x:Name="MenuItemEditCategories" Header="Edytuj kategorie i limity"/>
-                </MenuItem>
-                <MenuItem x:Name="MenuItemFilter" Header="Filtruj">
-                    <MenuItem x:Name="MenuItemFilterTransaction" Header="Pokaż wpływy/wydatki...">
-                        <MenuItem x:Name="MenuItemFilterTransactionBoth" Header="Wpływy i wydatki"/>
-                        <MenuItem x:Name="MenuItemFilterTransactionIncome" Header="Tylko wpływy"/>
-                        <MenuItem x:Name="MenuItemFilterTransactionExpense" Header="Tylko wydatki"/>
-                    </MenuItem>
-                    <MenuItem x:Name="MenuItemFilterCategories" Header="Pokaż kategorię...">
-                        <MenuItem x:Name="MenuItemFilterCategories0" Header="Wszystkie"/>
-                        <MenuItem x:Name="MenuItemFilterCategories1" Header="Rozrywka"/>
-                        <MenuItem x:Name="MenuItemFilterCategories2" Header="Rachunki"/>
-                        <MenuItem x:Name="MenuItemFilterCategories3" Header="Żywność"/>
-                        <MenuItem x:Name="MenuItemFilterCategories4" Header="Praca"/>
-                        <MenuItem x:Name="MenuItemFilterCategories5" Header="Inne"/>
-                    </MenuItem>
-                </MenuItem>-->
-                    <MenuItem x:Name="MenuItemHelp" Header="Pomoc">
-                        <MenuItem x:Name="MenuItemHelpAbout" Header="O programie" Click="MenuItemHelpAbout_Click"/>
+                    <MenuItem Header="Pomoc">
+                        <MenuItem Header="O programie" Click="OpenAboutWindow"/>
                     </MenuItem>
                 </Menu>
             </DockPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,4">
-                <Button Margin="5,0,0,0" Padding="4,2">
+                <Button Margin="5,0,0,0" Padding="4,2" Click="OpenNewTransactionWindow">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="../Icons/Placeholder.png"/>
+                        <Image Source="../Images/Placeholder.png"/>
                         <TextBlock Margin="4,0,0,0">Dodaj Transakcję</TextBlock>
                     </StackPanel>
                 </Button>
                 <Button Margin="5,0,0,0" Padding="4,2">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="../Icons/Placeholder.png"/>
+                        <Image Source="../Images/Placeholder.png"/>
                         <TextBlock Margin="4,0,0,0">Edytuj Kategorie</TextBlock>
                     </StackPanel>
                 </Button>
@@ -87,7 +69,7 @@
             </Grid.ColumnDefinitions>
             <Border BorderBrush="#FFDD2222" Background="#FFDDAAAA" Margin="6,6,6,6" Padding="2,2,2,2" BorderThickness="1,1,1,1">
                 <DockPanel>
-                    <Image Source="../Icons/Placeholder.png" Margin="4"/>
+                    <Image Source="../Images/Placeholder.png" Margin="4"/>
                     <TextBlock FontSize="14" Margin="4,0,0,0" TextWrapping="Wrap">
                         Uwaga! Kategoria 'Piwo' wykracza poza limit,<LineBreak/>
                         a Piter spędził nad tym czymś 4 dni. Niezbyt Rock and Stone.

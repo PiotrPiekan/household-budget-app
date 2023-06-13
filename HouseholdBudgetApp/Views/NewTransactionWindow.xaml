@@ -1,0 +1,110 @@
+﻿<Window x:Class="HouseholdBudgetApp.Views.NewTransactionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HouseholdBudgetApp.Views"
+        mc:Ignorable="d"
+        xml:lang="pl-PL"
+        Height="300" Width="400" MinHeight="200" MinWidth="300" Background="#FFB7D6FF">
+    <Window.Resources>
+        <Style x:Key="Row">
+            <Setter Property="Control.Margin" Value="4"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Padding" Value="8,4"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <local:ViewboxPanel Style="{StaticResource Row}">
+            <DockPanel>
+                <Label Content="Nazwa:"/>
+                <TextBox VerticalContentAlignment="Center" Text="{Binding Path=TName,UpdateSourceTrigger=PropertyChanged}"/>
+            </DockPanel>
+        </local:ViewboxPanel>
+        <local:ViewboxPanel Grid.Row="1" Style="{StaticResource Row}">
+            <DockPanel>
+                <Label Content="Kategoria:"/>
+                <ComboBox Grid.Column="1" x:Name="Comb" VerticalContentAlignment="Center">
+                    <ComboBoxItem Content="brak kategorii" IsSelected="True"/>
+                    <ComboBoxItem Content="Rachunki"/>
+                    <ComboBoxItem Content="Rozrywka"/>
+                    <ComboBoxItem Content="Jedzenie"/>
+                    <ComboBoxItem Content="Praca"/>
+                    <ComboBoxItem Content="Inne"/>
+                </ComboBox>
+            </DockPanel>
+        </local:ViewboxPanel>
+        <Grid Grid.Row="2" Style="{StaticResource Row}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <local:ViewboxPanel>
+                <DockPanel>
+                    <Label Content="Kwota:"/>
+                    <TextBox VerticalContentAlignment="Center" Text="{Binding Path=TAmount,UpdateSourceTrigger=PropertyChanged,StringFormat=C}"/>
+                </DockPanel>
+            </local:ViewboxPanel>
+            <Viewbox Grid.Column="1">
+                <StackPanel Margin="4,0">
+                    <RadioButton Content="Wydatek" GroupName="TType" IsChecked="True"/>
+                    <RadioButton Content="Wpływ" GroupName="TType"/>
+                </StackPanel>
+            </Viewbox>
+        </Grid>
+        <local:ViewboxPanel Grid.Row="3" Style="{StaticResource Row}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Data:"/>
+                <DatePicker Grid.Column="1" VerticalContentAlignment="Center" Text="{Binding Path=TDate,UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+        </local:ViewboxPanel>
+        <local:ViewboxPanel Grid.Row="4" Style="{StaticResource Row}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="20*"/>
+                    <ColumnDefinition Width="60*"/>
+                    <ColumnDefinition Width="20*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Column="0">
+                    <Label Content="Powtarzaj"/>
+                    <CheckBox VerticalAlignment="Center"/>
+                    <Label DockPanel.Dock="Left" Content="co"/>
+                </StackPanel>
+                <TextBox Grid.Column="1" VerticalContentAlignment="Center" Text="{Binding Path=TRepeatInterval,UpdateSourceTrigger=PropertyChanged}"/>
+                <ComboBox Grid.Column="2" VerticalContentAlignment="Center" Margin="4,0">
+                    <ComboBoxItem Content="Dzień"/>
+                    <ComboBoxItem Content="Tydzień"/>
+                    <ComboBoxItem Content="Miesiąc" IsSelected="True"/>
+                </ComboBox>
+                <TextBox Grid.Column="3" VerticalContentAlignment="Center"/>
+                <Label Grid.Column="4">razy</Label>
+            </Grid>
+        </local:ViewboxPanel>
+        <Viewbox Grid.Row="5" Style="{StaticResource Row}" HorizontalAlignment="Right">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="d" Background="HotPink"/>
+                <Button Content="Anuluj" Margin="0,0,6,0" Click="Close"/>
+                <Button Content="Zatwierdź" Click="Confirm" Command="Save">
+                    <Button.CommandBindings>
+                        <CommandBinding Command="Save" Executed="Save_Executed" CanExecute="Save_CanExecute"/>
+                    </Button.CommandBindings>
+                </Button>
+            </StackPanel>
+        </Viewbox>
+    </Grid>
+</Window>
