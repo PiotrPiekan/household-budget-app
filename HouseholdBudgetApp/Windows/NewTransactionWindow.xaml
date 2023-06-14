@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HouseholdBudgetApp.Views"
-        mc:Ignorable="d"
+        mc:Ignorable="d" WindowStartupLocation="CenterOwner"
         xml:lang="pl-PL"
         Height="300" Width="400" MinHeight="200" MinWidth="300" Background="#FFB7D6FF">
     <Window.Resources>
@@ -27,7 +27,7 @@
         <local:ViewboxPanel Style="{StaticResource Row}">
             <DockPanel>
                 <Label Content="Nazwa:"/>
-                <TextBox VerticalContentAlignment="Center" Text="{Binding Path=TName,UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox VerticalContentAlignment="Center" Text="{Binding TName, UpdateSourceTrigger=PropertyChanged}"/>
             </DockPanel>
         </local:ViewboxPanel>
         <local:ViewboxPanel Grid.Row="1" Style="{StaticResource Row}">
@@ -51,7 +51,7 @@
             <local:ViewboxPanel>
                 <DockPanel>
                     <Label Content="Kwota:"/>
-                    <TextBox VerticalContentAlignment="Center" Text="{Binding Path=TAmount,UpdateSourceTrigger=PropertyChanged,StringFormat=C}"/>
+                    <TextBox VerticalContentAlignment="Center" Text="{Binding TAmount, UpdateSourceTrigger=PropertyChanged, StringFormat=C}"/>
                 </DockPanel>
             </local:ViewboxPanel>
             <Viewbox Grid.Column="1">
@@ -68,7 +68,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Label Content="Data:"/>
-                <DatePicker Grid.Column="1" VerticalContentAlignment="Center" Text="{Binding Path=TDate,UpdateSourceTrigger=PropertyChanged}"/>
+                <DatePicker Grid.Column="1" VerticalContentAlignment="Center" Text="{Binding TDate, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
         </local:ViewboxPanel>
         <local:ViewboxPanel Grid.Row="4" Style="{StaticResource Row}">
@@ -85,7 +85,7 @@
                     <CheckBox VerticalAlignment="Center"/>
                     <Label DockPanel.Dock="Left" Content="co"/>
                 </StackPanel>
-                <TextBox Grid.Column="1" VerticalContentAlignment="Center" Text="{Binding Path=TRepeatInterval,UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Column="1" VerticalContentAlignment="Center" Text="{Binding TRepeatInterval, UpdateSourceTrigger=PropertyChanged, StringFormat=D}"/>
                 <ComboBox Grid.Column="2" VerticalContentAlignment="Center" Margin="4,0">
                     <ComboBoxItem Content="Dzień"/>
                     <ComboBoxItem Content="Tydzień"/>
@@ -97,9 +97,9 @@
         </local:ViewboxPanel>
         <Viewbox Grid.Row="5" Style="{StaticResource Row}" HorizontalAlignment="Right">
             <StackPanel Orientation="Horizontal">
-                <TextBlock x:Name="d" Background="HotPink"/>
+                <TextBlock Text="{Binding TRepeatInterval, UpdateSourceTrigger=PropertyChanged}" Background="HotPink"/>
                 <Button Content="Anuluj" Margin="0,0,6,0" Click="Close"/>
-                <Button Content="Zatwierdź" Click="Confirm" Command="Save">
+                <Button Content="Zatwierdź" Command="Save">
                     <Button.CommandBindings>
                         <CommandBinding Command="Save" Executed="Save_Executed" CanExecute="Save_CanExecute"/>
                     </Button.CommandBindings>

@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.Collections.ObjectModel;
+
 
 namespace HouseholdBudgetApp.Views
 {
@@ -31,6 +25,7 @@ namespace HouseholdBudgetApp.Views
             _tDate = DateTime.Today;
         }
 
+
         private string _tName;
         public string TName
         {
@@ -40,17 +35,10 @@ namespace HouseholdBudgetApp.Views
             }
             set
             {
-                if (string.IsNullOrEmpty(value))
-                {
-                    throw new ArgumentNullException("value");
-                }
                 _tName = value;
                 OnPropertyChanged("TName");
             }
         }
-
-        private string _tCategory;
-        public string TCategory{ get; set; }
 
         private double _tAmount;
         public double TAmount
@@ -106,6 +94,8 @@ namespace HouseholdBudgetApp.Views
 
         private void Save_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            // Confirm
+            //DialogResult = true;
         }
 
         private void Save_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -113,12 +103,8 @@ namespace HouseholdBudgetApp.Views
             e.CanExecute = !(
                 string.IsNullOrEmpty(TName)
                 || TAmount <= 0
+                || false
             );
-        }
-
-        private void Confirm(object sender, RoutedEventArgs e)
-        {
-            //DialogResult = true;
         }
 
         private void Close(object sender, RoutedEventArgs e)
