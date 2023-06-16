@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HouseholdBudgetApp.DataClasses;
+using HouseholdBudgetApp.FileClasses;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace HouseholdBudgetApp.Views
 {
@@ -20,14 +9,16 @@ namespace HouseholdBudgetApp.Views
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Account _account;
         public MainWindow()
         {
+            _account = new Account();
             InitializeComponent();
         }
 
         private void NewFile(object sender, RoutedEventArgs e)
         {
-
+            _account = new Account();
         }
 
         private void Open(object sender, RoutedEventArgs e)
@@ -50,10 +41,11 @@ namespace HouseholdBudgetApp.Views
 
         }
 
-        private void OpenNewTransactionWindow(object sender, RoutedEventArgs e)
+        private void OpenTransactionWindow(object sender, RoutedEventArgs e)
         {
-            NewTransactionWindow window = new NewTransactionWindow();
-            window.ShowDialog();
+            TransactionWindow window = new TransactionWindow(_account);
+            window.Owner = this;
+            window.Show();
         }
     }
 }
