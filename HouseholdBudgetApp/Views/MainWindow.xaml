@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:HouseholdBudgetApp.Views"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         xml:lang="pl-PL"
         Title="Budżet domowy" Height="600" Width="800" Background="#FFB7D6FF">
@@ -32,7 +31,7 @@
                 </Menu>
             </DockPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,4">
-                <Button Margin="5,0,0,0" Padding="4,2" Click="OpenNewTransactionWindow">
+                <Button Margin="5,0,0,0" Padding="4,2" Click="OpenTransactionWindow">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../Images/Placeholder.png"/>
                         <TextBlock Margin="4,0,0,0">Dodaj Transakcję</TextBlock>

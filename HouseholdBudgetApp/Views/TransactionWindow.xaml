@@ -1,13 +1,15 @@
-﻿<Window x:Class="HouseholdBudgetApp.Views.NewTransactionWindow"
+﻿<Window x:Class="HouseholdBudgetApp.Views.TransactionWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:HouseholdBudgetApp.Views"
+        xmlns:custom="clr-namespace:HouseholdBudgetApp.CustomElements"
+        xmlns:converters="clr-namespace:HouseholdBudgetApp.Converters"
         mc:Ignorable="d" WindowStartupLocation="CenterOwner"
         xml:lang="pl-PL"
         Height="300" Width="400" MinHeight="200" MinWidth="300" Background="#FFB7D6FF">
     <Window.Resources>
+        <converters:BoolInverterConverter x:Key="BoolInverterConverter"/>
         <Style x:Key="Row">
             <Setter Property="Control.Margin" Value="4"/>
         </Style>
@@ -24,54 +26,55 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <local:ViewboxPanel Style="{StaticResource Row}">
+        <custom:ViewboxPanel Style="{StaticResource Row}">
             <DockPanel>
                 <Label Content="Nazwa:"/>
                 <TextBox VerticalContentAlignment="Center" Text="{Binding TName, UpdateSourceTrigger=PropertyChanged}"/>
             </DockPanel>
-        </local:ViewboxPanel>
-        <local:ViewboxPanel Grid.Row="1" Style="{StaticResource Row}">
+        </custom:ViewboxPanel>
+        <custom:ViewboxPanel Grid.Row="1" Style="{StaticResource Row}">
             <DockPanel>
                 <Label Content="Kategoria:"/>
-                <ComboBox Grid.Column="1" x:Name="Comb" VerticalContentAlignment="Center">
-                    <ComboBoxItem Content="brak kategorii" IsSelected="True"/>
-                    <ComboBoxItem Content="Rachunki"/>
-                    <ComboBoxItem Content="Rozrywka"/>
-                    <ComboBoxItem Content="Jedzenie"/>
-                    <ComboBoxItem Content="Praca"/>
-                    <ComboBoxItem Content="Inne"/>
+                <ComboBox
+                    Grid.Column="1"
+                    VerticalContentAlignment="Center"
+                    ItemsSource="{Binding CategoryList, Mode=OneTime}"
+                    SelectedValue="{Binding TCategory,
+                    UpdateSourceTrigger=PropertyChanged}"
+                    DisplayMemberPath="Name"
+                    SelectedValuePath="Id">
                 </ComboBox>
             </DockPanel>
-        </local:ViewboxPanel>
+        </custom:ViewboxPanel>
         <Grid Grid.Row="2" Style="{StaticResource Row}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <local:ViewboxPanel>
+            <custom:ViewboxPanel>
                 <DockPanel>
                     <Label Content="Kwota:"/>
                     <TextBox VerticalContentAlignment="Center" Text="{Binding TAmount, UpdateSourceTrigger=PropertyChanged, StringFormat=C}"/>
                 </DockPanel>
-            </local:ViewboxPanel>
+            </custom:ViewboxPanel>
             <Viewbox Grid.Column="1">
                 <StackPanel Margin="4,0">
-                    <RadioButton Content="Wydatek" GroupName="TType" IsChecked="True"/>
-                    <RadioButton Content="Wpływ" GroupName="TType"/>
+                    <RadioButton Content="Wydatek" GroupName="TType" IsChecked="{Binding TIsExpense, UpdateSourceTrigger=PropertyChanged}"/>
+                    <RadioButton Content="Wpływ" GroupName="TType" IsChecked="{Binding TIsExpense, Converter={StaticResource BoolInverterConverter}}"/>
                 </StackPanel>
             </Viewbox>
         </Grid>
-        <local:ViewboxPanel Grid.Row="3" Style="{StaticResource Row}">
+        <custom:ViewboxPanel Grid.Row="3" Style="{StaticResource Row}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Label Content="Data:"/>
-                <DatePicker Grid.Column="1" VerticalContentAlignment="Center" Text="{Binding TDate, UpdateSourceTrigger=PropertyChanged}"/>
+                <DatePicker Grid.Column="1" VerticalContentAlignment="Center" SelectedDate="{Binding TDate, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
-        </local:ViewboxPanel>
-        <local:ViewboxPanel Grid.Row="4" Style="{StaticResource Row}">
+        </custom:ViewboxPanel>
+        <custom:ViewboxPanel Grid.Row="4" Style="{StaticResource Row}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -82,22 +85,27 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal" Grid.Column="0">
                     <Label Content="Powtarzaj"/>
-                    <CheckBox VerticalAlignment="Center"/>
+                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding TIsRepeating, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label DockPanel.Dock="Left" Content="co"/>
                 </StackPanel>
-                <TextBox Grid.Column="1" VerticalContentAlignment="Center" Text="{Binding TRepeatInterval, UpdateSourceTrigger=PropertyChanged, StringFormat=D}"/>
-                <ComboBox Grid.Column="2" VerticalContentAlignment="Center" Margin="4,0">
+                <TextBox Grid.Column="1" VerticalContentAlignment="Center" IsEnabled="{Binding TIsRepeating, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Text="{Binding TRepeatIntervalAmount, UpdateSourceTrigger=PropertyChanged, StringFormat=D}"/>
+                <ComboBox
+                    Name="ComboBoxRepeatIntervalAmount"
+                    Grid.Column="2"
+                    VerticalContentAlignment="Center"
+                    IsEnabled="{Binding TIsRepeating, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
+                    SelectedValue="{Binding TCategory, UpdateSourceTrigger=PropertyChanged}"
+                    Margin="4,0">
                     <ComboBoxItem Content="Dzień"/>
                     <ComboBoxItem Content="Tydzień"/>
                     <ComboBoxItem Content="Miesiąc" IsSelected="True"/>
                 </ComboBox>
-                <TextBox Grid.Column="3" VerticalContentAlignment="Center"/>
+                <TextBox Grid.Column="3" VerticalContentAlignment="Center" IsEnabled="{Binding TIsRepeating, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"  Text="{Binding TRepeatCount, UpdateSourceTrigger=PropertyChanged, StringFormat=D}"/>
                 <Label Grid.Column="4">razy</Label>
             </Grid>
-        </local:ViewboxPanel>
+        </custom:ViewboxPanel>
         <Viewbox Grid.Row="5" Style="{StaticResource Row}" HorizontalAlignment="Right">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding TRepeatInterval, UpdateSourceTrigger=PropertyChanged}" Background="HotPink"/>
                 <Button Content="Anuluj" Margin="0,0,6,0" Click="Close"/>
                 <Button Content="Zatwierdź" Command="Save">
                     <Button.CommandBindings>

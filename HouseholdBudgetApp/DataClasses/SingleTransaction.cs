@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HouseholdBudgetApp.DataClasses
 {
-    internal class SingleTransaction
+    public class SingleTransaction
     {
     }
 }

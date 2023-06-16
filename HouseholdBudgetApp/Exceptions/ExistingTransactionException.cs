@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HouseholdBudgetApp.FileClasses
+namespace HouseholdBudgetApp.Exceptions
 {
-    internal class IO
+    internal class ExistingTransactionException : Exception
     {
     }
 }
