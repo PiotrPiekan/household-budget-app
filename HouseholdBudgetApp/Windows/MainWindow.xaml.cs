@@ -11,37 +11,46 @@ namespace HouseholdBudgetApp.Views
     /// </summary>
     public partial class MainWindow : Window
     {
-        public Account account = new Account("JaXD");
+        public Account MyAccount = new Account("Student Biedak");
         public static MainWindow mainWindow;
+        private IO _io = new IO();
 
         public MainWindow()
         {
             InitializeComponent();
             mainWindow = this;
-            SaldoBox.Text = account.saldo.ToString() + " zł";
+            SaldoBox.Text = MyAccount.saldo.ToString() + " zł";
         }
 
         private void NewFile(object sender, RoutedEventArgs e)
         {
-
+            MyAccount = new Account("Student Biedak");
+            _io = new IO();
+            DisplayDataInGrid();
         }
 
-        private void Open(object sender, RoutedEventArgs e) //Wczytaj?
+        private void Open(object sender, RoutedEventArgs e)
         {
-            IO io = new IO();
-            account = io.LoadData("test.txt");
-            DisplayDataInGrid();
+            if (_io.SelectFile(false))
+            {
+                MyAccount = _io.LoadData();
+                DisplayDataInGrid();
+            }
         }
 
         private void Save(object sender, RoutedEventArgs e)
         {
-            IO io = new IO();
-            io.SaveData("test2.txt", account);
+            bool selected = true;
+            if (string.IsNullOrEmpty(_io.FilePath))
+                selected = _io.SelectFile(true);
+            if (selected)
+                _io.SaveData(MyAccount);
         }
 
         private void SaveTo(object sender, RoutedEventArgs e)
         {
-
+            if (_io.SelectFile(true))
+                _io.SaveData(MyAccount);
         }
 
         private void OpenAboutWindow(object sender, RoutedEventArgs e)
@@ -61,7 +70,7 @@ namespace HouseholdBudgetApp.Views
         {
             List<DisplayData> transactions = new List<DisplayData>();
 
-            foreach (SingleTransaction expense in MainWindow.mainWindow.account.expense)
+            foreach (SingleTransaction expense in MainWindow.mainWindow.MyAccount.expense)
             {
 
                 DisplayData data = new DisplayData();
@@ -82,7 +91,7 @@ namespace HouseholdBudgetApp.Views
             }
 
 
-            foreach (SingleTransaction income in MainWindow.mainWindow.account.income)
+            foreach (SingleTransaction income in MainWindow.mainWindow.MyAccount.income)
             {
                 DisplayData data = new DisplayData();
                 data.Nazwa = income.getName();
