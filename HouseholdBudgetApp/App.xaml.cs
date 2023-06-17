@@ -1,5 +1,4 @@
-﻿using HouseholdBudgetApp.Views;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -14,12 +13,5 @@ namespace HouseholdBudgetApp
     /// </summary>
     public partial class App : Application
     {
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            base.OnStartup(e);
-
-            MainWindow w = new MainWindow();
-            w.Show();
-        }
     }
 }

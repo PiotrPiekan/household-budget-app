@@ -6,31 +6,20 @@ using System.Threading.Tasks;
 
 namespace HouseholdBudgetApp.DataClasses
 {
-    public class Category
+    class Category
     {
-        private static int s_nextId = 1;
+        private int _id;
+        private string _name;
+        private double _monthlyLimit;
+        private double _yearlyLimit;
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public double MonthlyLimit { get; set; }
+        public double YearlyLimit { get; set; }
 
-        public int Id { get; }
-        public string Name { get; }
-        public bool MonthlyLimitEnabled { get; }
-        public bool YearlyLimitEnabled { get; }
-        public double MonthlyLimit { get; }
-        public double YearlyLimit { get; }
-
-        public Category(
-            string name,
-            bool monthlyLimitEnabled,
-            bool yearlyLimitEnabled,
-            double monthlyLimit,
-            double yearlyLimit
-        )
+        public Category()
         {
-            Id = s_nextId++;
-            Name = name;
-            MonthlyLimitEnabled = monthlyLimitEnabled;
-            YearlyLimitEnabled = yearlyLimitEnabled;
-            MonthlyLimit = monthlyLimit;
-            YearlyLimit = yearlyLimit;
+
         }
     }
 }

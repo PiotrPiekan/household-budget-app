@@ -1,48 +1,61 @@
-﻿using HouseholdBudgetApp.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace HouseholdBudgetApp.DataClasses
 {
     public class Account
     {
-        private double _startingBalance;
-        private List<Transaction> _transactionList;
-        public ObservableCollection<SingleTransaction> SingleTransactionList { get; }
-        public ObservableCollection<Category> CategoryList;
+        private string owner = string.Empty;
+        public float saldo = 0;
+        public List<SingleTransaction> income = new List<SingleTransaction>();
+        public List<SingleTransaction> expense = new List<SingleTransaction>();
 
-        public Account()
+        public string getOwner()
         {
-            _transactionList = new List<Transaction>();
-            SingleTransactionList = new ObservableCollection<SingleTransaction>();
-            CategoryList = new ObservableCollection<Category>();
-            FillCategoryList();
-            _startingBalance = 0;
+            return owner;
         }
 
-        public void AddTransaction(Transaction newTransaction)
+        public void setIncome(SingleTransaction transaction)
         {
-            foreach (var transaction in _transactionList)
-            {
-                if (newTransaction.Conflicts(transaction))
+            income.Add(transaction);
+            saldo += transaction.getAmount();
+        }
+
+        public void setExpense(SingleTransaction transaction)
+        {
+            expense.Add(transaction);
+            saldo += transaction.getAmount();
+        }
+
+        public Account(string o) { owner = o; }
+
+        public float CalculateSaldo()   //do przeliczania od nowa w razie potrzeby xD
+        {
+            float calculated = 0.0f;
+            foreach (SingleTransaction transaction in income) calculated += transaction.getAmount();
+            foreach (SingleTransaction transaction in expense) calculated -= transaction.getAmount();
+            return calculated;
+        }
+
+        public void CheckNextConstantTransactions() //nie wiem gdzie dokładnie to wywołać xD
+        {
+            foreach(SingleTransaction transaction in income) 
+            { 
+                if(transaction.info.isConstant)
                 {
-                    throw new ExistingTransactionException();
+                    SingleTransaction next = transaction.CheckNextTransaction();
+                    if(next!=null) setIncome(next);
                 }
             }
-            _transactionList.Add(newTransaction);
+
+            foreach (SingleTransaction transaction in expense)
+            {
+                if (transaction.info.isConstant)
+                {
+                    SingleTransaction next = transaction.CheckNextTransaction();
+                    if(next!=null) setExpense(next);
+                }
+            }
         }
 
-        private void FillCategoryList()
-        {
-            CategoryList.Add(new Category("Jedzenie", false, false, 0, 0));
-            CategoryList.Add(new Category("Rachunki", false, false, 0, 0));
-            CategoryList.Add(new Category("Rozrywka", false, false, 0, 0));
-            CategoryList.Add(new Category("Praca", false, false, 0, 0));
-            CategoryList.Add(new Category("Inne", false, false, 0, 0));
-        }
     }
 }

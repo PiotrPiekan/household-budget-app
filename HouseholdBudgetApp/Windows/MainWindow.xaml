@@ -3,9 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HouseholdBudgetApp.Views"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         xml:lang="pl-PL"
         Title="Budżet domowy" Height="600" Width="800" Background="#FFB7D6FF">
+          
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -31,7 +33,7 @@
                 </Menu>
             </DockPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,4">
-                <Button Margin="5,0,0,0" Padding="4,2" Click="OpenTransactionWindow">
+                <Button Margin="5,0,0,0" Padding="4,2" Click="OpenNewTransactionWindow">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../Images/Placeholder.png"/>
                         <TextBlock Margin="4,0,0,0">Dodaj Transakcję</TextBlock>
@@ -59,8 +61,8 @@
                 </ComboBox>
             </StackPanel>
         </Grid>
-        <DataGrid Grid.Row="1">
-        </DataGrid>
+        <DataGrid x:Name="DataDisplayGrid" Grid.Row="1" Height="Auto" Width="700" FontSize="16" MinColumnWidth="40" />
+
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -78,7 +80,7 @@
             <DockPanel Grid.Column="1" Margin="8">
                 <Label Content="Łącznie:" FontSize="24" VerticalAlignment="Center" Margin="0,0,6,0"/>
                 <Border BorderThickness="1,1,1,1" BorderBrush="#FF888888" Background="#FFF0F0F0">
-                    <TextBlock FontSize="30" Padding="10, 0" TextAlignment="Right">42069 zły</TextBlock>
+                    <TextBlock x:Name="SaldoBox" FontSize="30" Padding="10, 0" TextAlignment="Right">42069 zły</TextBlock>
                 </Border>
             </DockPanel>
         </Grid>
