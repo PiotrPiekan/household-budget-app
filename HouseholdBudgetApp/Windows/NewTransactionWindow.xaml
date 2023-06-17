@@ -1,15 +1,14 @@
-﻿<Window x:Class="HouseholdBudgetApp.Views.TransactionWindow"
+﻿<Window x:Class="HouseholdBudgetApp.Views.NewTransactionWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:custom="clr-namespace:HouseholdBudgetApp.CustomElements"
-        xmlns:converters="clr-namespace:HouseholdBudgetApp.Converters"
+        xmlns:local="clr-namespace:HouseholdBudgetApp.Views"
         mc:Ignorable="d" WindowStartupLocation="CenterOwner"
         xml:lang="pl-PL"
-        Height="300" Width="400" MinHeight="200" MinWidth="300" Background="#FFB7D6FF">
+        Height="300" Width="400" MinHeight="200" MinWidth="300" Background="#FFB7D6FF"
+        Closing="ClosingNewTransactionWindow">
     <Window.Resources>
-        <converters:BoolInverterConverter x:Key="BoolInverterConverter"/>
         <Style x:Key="Row">
             <Setter Property="Control.Margin" Value="4"/>
         </Style>
@@ -26,55 +25,54 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <custom:ViewboxPanel Style="{StaticResource Row}">
+        <local:ViewboxPanel Style="{StaticResource Row}">
             <DockPanel>
                 <Label Content="Nazwa:"/>
-                <TextBox VerticalContentAlignment="Center" Text="{Binding TName, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox x:Name="Name" VerticalContentAlignment="Center" Text="{Binding TName, UpdateSourceTrigger=PropertyChanged}"/>
             </DockPanel>
-        </custom:ViewboxPanel>
-        <custom:ViewboxPanel Grid.Row="1" Style="{StaticResource Row}">
+        </local:ViewboxPanel>
+        <local:ViewboxPanel Grid.Row="1" Style="{StaticResource Row}">
             <DockPanel>
                 <Label Content="Kategoria:"/>
-                <ComboBox
-                    Grid.Column="1"
-                    VerticalContentAlignment="Center"
-                    ItemsSource="{Binding CategoryList, Mode=OneTime}"
-                    SelectedValue="{Binding TCategory,
-                    UpdateSourceTrigger=PropertyChanged}"
-                    DisplayMemberPath="Name"
-                    SelectedValuePath="Id">
+                <ComboBox Grid.Column="1" x:Name="Comb" VerticalContentAlignment="Center">
+                    <ComboBoxItem Content="brak kategorii" IsSelected="True"/>
+                    <ComboBoxItem Content="Rachunki"/>
+                    <ComboBoxItem Content="Rozrywka"/>
+                    <ComboBoxItem Content="Jedzenie"/>
+                    <ComboBoxItem Content="Praca"/>
+                    <ComboBoxItem Content="Inne"/>
                 </ComboBox>
             </DockPanel>
-        </custom:ViewboxPanel>
+        </local:ViewboxPanel>
         <Grid Grid.Row="2" Style="{StaticResource Row}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <custom:ViewboxPanel>
+            <local:ViewboxPanel>
                 <DockPanel>
                     <Label Content="Kwota:"/>
-                    <TextBox VerticalContentAlignment="Center" Text="{Binding TAmount, UpdateSourceTrigger=PropertyChanged, StringFormat=C}"/>
+                    <TextBox x:Name="Amount" VerticalContentAlignment="Center" Text="{Binding TAmount, UpdateSourceTrigger=PropertyChanged, StringFormat=C}"/>
                 </DockPanel>
-            </custom:ViewboxPanel>
+            </local:ViewboxPanel>
             <Viewbox Grid.Column="1">
                 <StackPanel Margin="4,0">
-                    <RadioButton Content="Wydatek" GroupName="TType" IsChecked="{Binding TIsExpense, UpdateSourceTrigger=PropertyChanged}"/>
-                    <RadioButton Content="Wpływ" GroupName="TType" IsChecked="{Binding TIsExpense, Converter={StaticResource BoolInverterConverter}}"/>
+                    <RadioButton x:Name="ExpenseButton" Content="Wydatek" GroupName="TType" IsChecked="True"/>
+                    <RadioButton x:Name="IncomeButton" Content="Wpływ" GroupName="TType"/>
                 </StackPanel>
             </Viewbox>
         </Grid>
-        <custom:ViewboxPanel Grid.Row="3" Style="{StaticResource Row}">
+        <local:ViewboxPanel Grid.Row="3" Style="{StaticResource Row}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Label Content="Data:"/>
-                <DatePicker Grid.Column="1" VerticalContentAlignment="Center" SelectedDate="{Binding TDate, UpdateSourceTrigger=PropertyChanged}"/>
+                <DatePicker x:Name="Date" Grid.Column="1" VerticalContentAlignment="Center" Text="{Binding TDate, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
-        </custom:ViewboxPanel>
-        <custom:ViewboxPanel Grid.Row="4" Style="{StaticResource Row}">
+        </local:ViewboxPanel>
+        <local:ViewboxPanel Grid.Row="4" Style="{StaticResource Row}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -85,29 +83,24 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal" Grid.Column="0">
                     <Label Content="Powtarzaj"/>
-                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding TIsRepeating, UpdateSourceTrigger=PropertyChanged}"/>
+                    <CheckBox x:Name="IsRepeat" VerticalAlignment="Center"/>
                     <Label DockPanel.Dock="Left" Content="co"/>
                 </StackPanel>
-                <TextBox Grid.Column="1" VerticalContentAlignment="Center" IsEnabled="{Binding TIsRepeating, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Text="{Binding TRepeatIntervalAmount, UpdateSourceTrigger=PropertyChanged, StringFormat=D}"/>
-                <ComboBox
-                    Name="ComboBoxRepeatIntervalAmount"
-                    Grid.Column="2"
-                    VerticalContentAlignment="Center"
-                    IsEnabled="{Binding TIsRepeating, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
-                    SelectedValue="{Binding TCategory, UpdateSourceTrigger=PropertyChanged}"
-                    Margin="4,0">
+                <TextBox x:Name="timeSpanBox" Grid.Column="1" VerticalContentAlignment="Center" Text="{Binding TRepeatInterval, UpdateSourceTrigger=PropertyChanged, StringFormat=D}"/>
+                <ComboBox x:Name="TypeOfTime" Grid.Column="2" VerticalContentAlignment="Center" Margin="4,0">
                     <ComboBoxItem Content="Dzień"/>
                     <ComboBoxItem Content="Tydzień"/>
                     <ComboBoxItem Content="Miesiąc" IsSelected="True"/>
                 </ComboBox>
-                <TextBox Grid.Column="3" VerticalContentAlignment="Center" IsEnabled="{Binding TIsRepeating, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"  Text="{Binding TRepeatCount, UpdateSourceTrigger=PropertyChanged, StringFormat=D}"/>
+                <TextBox x:Name="HowMany" Grid.Column="3" VerticalContentAlignment="Center"/>
                 <Label Grid.Column="4">razy</Label>
             </Grid>
-        </custom:ViewboxPanel>
+        </local:ViewboxPanel>
         <Viewbox Grid.Row="5" Style="{StaticResource Row}" HorizontalAlignment="Right">
             <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding TRepeatInterval, UpdateSourceTrigger=PropertyChanged}" Background="HotPink"/>
                 <Button Content="Anuluj" Margin="0,0,6,0" Click="Close"/>
-                <Button Content="Zatwierdź" Command="Save">
+                <Button Content="Zatwierdź" Command="Save" Click="SaveAndAdd">
                     <Button.CommandBindings>
                         <CommandBinding Command="Save" Executed="Save_Executed" CanExecute="Save_CanExecute"/>
                     </Button.CommandBindings>

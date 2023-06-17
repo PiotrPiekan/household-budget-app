@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace HouseholdBudgetApp.DataClasses
 {
-    public class Transaction
+    class Transaction
     {
-        private static int s_nextId = 0;
         public int Id { get; }
         public string Name { get; }
         public int CategoryId { get; }
@@ -20,10 +19,10 @@ namespace HouseholdBudgetApp.DataClasses
         public short RepeatIntervalType { get; }
         public short RepeatCount { get; }
         public Transaction(
+            int id,
             string name,
             int categoryId,
             double amount,
-            bool isExpense,
             DateTime date,
             bool isRepeating,
             short repeatIntervalAmount,
@@ -31,10 +30,10 @@ namespace HouseholdBudgetApp.DataClasses
             short repeatCount
         )
         {
-            Id = s_nextId++;
+            Id = id;
             Name = name;
             CategoryId = categoryId;
-            Value = isExpense ? -1 * amount : amount;
+            Value = amount;
             Date = date;
             IsRepeating = isRepeating;
             RepeatIntervalAmount = repeatIntervalAmount;
