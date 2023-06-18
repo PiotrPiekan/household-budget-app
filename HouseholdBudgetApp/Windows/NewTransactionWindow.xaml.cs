@@ -114,7 +114,7 @@ namespace HouseholdBudgetApp.Views
         void ClosingNewTransactionWindow(object sender, CancelEventArgs e)
         {
             MainWindow.mainWindow.DisplayDataInGrid();
-            MainWindow.mainWindow.SaldoBox.Text = MainWindow.mainWindow.account.saldo.ToString() + " zł";
+            MainWindow.mainWindow.SaldoBox.Text = MainWindow.mainWindow.MyAccount.saldo.ToString() + " zł";
             //MainWindow.mainWindow.account.CheckNextConstantTransactions(); //działało i nie działa :|
         }
 
@@ -139,11 +139,11 @@ namespace HouseholdBudgetApp.Views
 
             if ((bool)ExpenseButton.IsChecked)
             {
-                MainWindow.mainWindow.account.setExpense(transaction);
+                MainWindow.mainWindow.MyAccount.setExpense(transaction);
             }
             if ((bool)IncomeButton.IsChecked)
             {
-                MainWindow.mainWindow.account.setIncome(transaction);
+                MainWindow.mainWindow.MyAccount.setIncome(transaction);
             }
             Close();
         }

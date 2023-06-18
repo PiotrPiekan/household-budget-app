@@ -3,14 +3,46 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using HouseholdBudgetApp.DataClasses;
+using Microsoft.Win32;
 
 namespace HouseholdBudgetApp.FileClasses
 {
-    class IO
+    internal class IO
     {
-        public Account LoadData(string path)
+        public string FilePath = "";
+
+        public IO() { }
+
+        public bool SelectFile(bool isSave)
         {
-            List<string> fileData = File.ReadAllLines(path).ToList();
+            FileDialog dialog;
+            if (isSave)
+            {
+                dialog = new SaveFileDialog();
+            }
+            else
+            {
+                dialog = new OpenFileDialog();
+            }
+
+            dialog.FileName = "budżet";
+            dialog.DefaultExt = ".txt";
+            dialog.Filter = "Pliki tekstowe|*.txt";
+
+            bool? result = dialog.ShowDialog();
+
+            if (result == true)
+            {
+                FilePath = dialog.FileName;
+            }
+            
+            // przekształcenie nullowalnego boola na nienullowalny
+            return result.HasValue && result.Value;
+        }
+
+        public Account LoadData()
+        {
+            List<string> fileData = File.ReadAllLines(FilePath).ToList();
 
             string owner = fileData[0];
             fileData.RemoveAt(0);
@@ -45,7 +77,7 @@ namespace HouseholdBudgetApp.FileClasses
 
         }
 
-        public void SaveData(string path, Account account)
+        public void SaveData(Account account)
         {
             List<string> toSave = new List<string>();
 
@@ -87,9 +119,7 @@ namespace HouseholdBudgetApp.FileClasses
                 toSave.Add(s);
             }
 
-            File.WriteAllLines(path, toSave);
+            File.WriteAllLines(FilePath, toSave);
         }
-
-
     }
 }
