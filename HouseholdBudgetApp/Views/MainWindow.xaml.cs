@@ -3,7 +3,6 @@ using System.Windows;
 using HouseholdBudgetApp.DataClasses;
 using HouseholdBudgetApp.FileClasses;
 
-
 namespace HouseholdBudgetApp.Views
 {
     /// <summary>
@@ -51,11 +50,6 @@ namespace HouseholdBudgetApp.Views
         {
             if (_io.SelectFile(true))
                 _io.SaveData(MyAccount);
-        }
-
-        private void OpenAboutWindow(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void OpenNewTransactionWindow(object sender, RoutedEventArgs e)
